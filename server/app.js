@@ -5,9 +5,7 @@ const mongoose =require('mongoose');
 const {MONGOURI} = require('./keys')
 
 
-require('./models/user')
-app.use(express.json())//json으로 받기위함
-app.use(require('./routes/auth'))
+
 
 mongoose.connect(MONGOURI,{
     useNewUrlParser:true,
@@ -25,6 +23,12 @@ mongoose.connection.on('error',(err)=>{
 // }
 
 //app.use(customMiddleware)
+require('./models/user')
+require('./models/post')
+
+app.use(express.json())//json으로 받기위함
+app.use(require('./routes/auth'))
+app.use(require('./routes/post'))
 
 app.listen(PORT,()=>{
     console.log("server is running on",PORT);
