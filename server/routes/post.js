@@ -16,14 +16,16 @@ router.get('/allpost',(req,res)=>{
 })
 
 router.post('/createpost',requireLogin,(req,res) => {
-    const {title,body} = req.body
-    if(!title || !body){
+    const {title,body,pic} = req.body
+    console.log(title,body,pic);
+    if(!title || !body ||!pic){
         res.status(422).json({error:"title 또는 body를 입력해주세요"})
     }
     req.user.password = undefined
     const post = new Post({
         title,
         body,
+        photo:pic,
         postedBy:req.user
     })
     post.save().then(result=>{

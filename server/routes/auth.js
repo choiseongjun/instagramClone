@@ -56,9 +56,12 @@ router.post('/signin', (req, res)=>{
          bcrypt.compare(password,savedUser.password)
           .then(doMatch=>{//비밀번호가 맞는경우
               if(doMatch){
-                  //res.json({message:"로그인이 완료되었습니다"})   
-                  const token = jwt.sign({_id:savedUser._id},JWT_SECRET)
-                  res.json({token})               
+                const token = jwt.sign({_id:savedUser._id},JWT_SECRET)
+                   
+                const {_id,name,email} =savedUser
+                res.json({token,user:{_id,name,email},message:"로그인이 완료되었습니다"})  
+                //res.json({message:"로그인이 완료되었습니다"})   
+                                 
               }else{
                   return res.status(422).json({error:"이메일 또는 비밀번호가 틀렸습니다"})
               }
